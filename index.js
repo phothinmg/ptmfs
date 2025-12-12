@@ -92,6 +92,36 @@ var ptmfs = (function () {
         )
         .map((f) => path.join(folderPath, f));
     },
+    getStringFromFile: async function (filePath) {
+      filePath = path.resolve(process.cwd(), filePath);
+      if (_.existsFilePath(filePath)) {
+        throw new Error(`${filePath} does not exist`);
+      }
+      const content = await fs.promises.readFile(filePath, "utf8");
+      return content;
+    },
+    getStringFromFileSync: function (filePath) {
+      filePath = path.resolve(process.cwd(), filePath);
+      if (_.existsFilePath(filePath)) {
+        throw new Error(`${filePath} does not exist`);
+      }
+      const content = fs.readFileSync(filePath, "utf8");
+      return content;
+    },
+    remove: async function (filePath) {
+      filePath = path.resolve(process.cwd(), filePath);
+      if (_.existsFilePath(filePath)) {
+        throw new Error(`${filePath} does not exist`);
+      }
+      await fs.promises.rm(filePath);
+    },
+    removeSync: function (filePath) {
+      filePath = path.resolve(process.cwd(), filePath);
+      if (_.existsFilePath(filePath)) {
+        throw new Error(`${filePath} does not exist`);
+      }
+      fs.rmSync(filePath);
+    },
   };
   return _;
 })();
